@@ -3,11 +3,13 @@ package org.lzbruby.web;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import org.lzbruby.domain.User;
+import org.lzbruby.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * 功能描述：
@@ -26,25 +28,23 @@ public class UserController {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public JSONObject getAllUsers() {
         JSONObject jsonObject = new JSONObject();
 
-        User user = new User();
-        user.setCode("07061176");
-        user.setName("lizhenbin");
-
-        ArrayList<User> users = Lists.newArrayList();
-        users.add(user);
-
-        jsonObject.put("users", user);
+        List<Map<String, Object>> allUsers = userService.getAllUsers();
+        jsonObject.put("users", allUsers);
         return jsonObject;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public JSONObject addUser(@RequestBody User user) {
-        ArrayList<User> users = Lists.newArrayList();
-        users.add(user);
+        Random random = new Random();
+        int key = Math.abs(random.nextInt(1000000));
+        userService.create("test", key);
         return new JSONObject();
     }
 

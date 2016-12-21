@@ -13,16 +13,16 @@ import java.io.Serializable;
 public class User implements Serializable {
     private static final long serialVersionUID = 7855141771217794699L;
 
-    private String code;
+    private Integer id;
 
     private String name;
 
-    public String getCode() {
-        return code;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
